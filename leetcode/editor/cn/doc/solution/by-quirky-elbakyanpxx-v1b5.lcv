@@ -1,0 +1,45 @@
+### 解题思路
+
+像这类题，我们常常会先想到穷举法，但是这道题穷举法最大的问题就是重复扫描元素。
+为了降低时间复杂度，我们可以**借助数组或者集合等工具来存储已经扫描过的元素**。
+这道题由于需要返回数组下标，所以我们要同时存储元素以及下标，因此我们采用集合来存储。
+
+### 代码
+
+* java
+
+```java
+class Solution {
+    //暴力解法————穷举法
+    // public int[] twoSum(int[] nums, int target) {
+    //     int len = nums.length;
+    //     for(int i = 0; i < len - 1; ++i){
+    //         for(int j = i + 1; j <= len - 1; ++j){
+    //             if(i != j && (nums[i] + nums[j]) == target){
+    //                 return new int[]{i,j};
+    //             }
+    //         }
+    //     }
+    //     return null;
+    // }
+
+    //使用map存储已经扫描过的元素（键）以及下标（值），避免重复扫描
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> map = new HashMap<>();  //元素存储为键，下标为值
+        int[] result = new int[2];
+        for(int i = 0; i < nums.length;++i){
+            int res = target - nums[i];
+            Integer j = map.get(res);
+            if(j != null){
+                result[0] = i;
+                result[1] = j;
+                break;
+            }
+            map.put(nums[i],i);
+        }
+        return result;
+    }
+}
+```
+
+![image.png](https://pic.leetcode.cn/1669624076-ZIlPYQ-image.png)
